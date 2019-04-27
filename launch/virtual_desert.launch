@@ -1,0 +1,6 @@
+<launch>
+    <arg name="config" default="$(find virtual_desert)/launch/virtual_desert_param.yaml" />
+    <rosparam command="load" file="$(arg config)" ns="virtual_desert"/>
+    <node pkg="virtual_desert" name="virtual_desert" type="virtual_desert_node.py">
+    </node>
+</launch>

@@ -1,0 +1,51 @@
+panels_config_id: 1
+rolling_mean_size: 1800
+startup_delay: 4.0
+
+trials:
+    -  
+        # First Trial 
+        # -----------
+        'name':  'trial 1'
+        
+        'duration': 3.0 
+    
+        'panels': 
+            'mode': 'fixed' 
+            'function': 'pattern_id0' 
+    
+        'sunled': 
+            'initial_pos': 3 
+            'velocity': 1.0 
+    
+        'motor': 
+            'mode': 'tracking' 
+
+        'flow':  
+            'set_point': 1.0
+    
+    
+    -  
+        # Second Trial 
+        # -----------
+
+    
+        'name': 'trial 2'
+
+        'duration': 5.0 
+    
+        'panels': 
+            'mode': 'fixed' 
+            'function': 'pattern_id0'
+    
+        'sunled': 
+            'initial_pos': 3 
+            'velocity': 1.0 
+    
+        'motor': 
+            'mode': 'fixed' 
+            'angle': 90.0 
+
+        'flow':
+            'set_point': 1.0
+    
