@@ -1,6 +1,12 @@
 panels_config_id: 1
 rolling_mean_size: 1800
-startup_delay: 4.0
+startup_delay: 0.5
+
+flow_default:
+    push_addresses: ['F']
+    pull_addresses: ['A', 'B', 'C', 'D', 'E']
+    push_scale: 1.0
+    pull_scale: 1000.0
 
 trials:
     -  
@@ -8,11 +14,15 @@ trials:
         # -----------
         'name':  'trial 1'
         
-        'duration': 3.0 
+        'duration': 10.0 
     
         'panels': 
-            'mode': 'fixed' 
-            'function': 'pattern_id0' 
+            'mode': 'fixed_pattern' 
+            'gain_x': 0.0
+            'gain_y': 0.0
+            'bias_x': 0.0
+            'bias_y': 0.0
+            'pattern_id': 1 
     
         'sunled': 
             'initial_pos': 3 
@@ -23,6 +33,7 @@ trials:
 
         'flow':  
             'set_point': 1.0
+            'start_time': 3.0 
     
     
     -  
@@ -35,9 +46,21 @@ trials:
         'duration': 5.0 
     
         'panels': 
-            'mode': 'fixed' 
-            'function': 'pattern_id0'
-    
+            'mode': 'set_by_angle' 
+            'gain_x': 0.0
+            'gain_y': 0.0
+            'bias_x': 0.0
+            'bias_y': 0.0
+            'pattern_table': 
+                - [-180.0, 0] 
+                - [-135.0, 1]
+                - [ -90.0, 2]
+                - [ -45.0, 3]
+                - [  -0.0, 4]
+                - [  45.0, 5]
+                - [  90.0, 6]
+                - [ 135.0, 7]
+
         'sunled': 
             'initial_pos': 3 
             'velocity': 1.0 
@@ -47,5 +70,7 @@ trials:
             'angle': 90.0 
 
         'flow':
-            'set_point': 1.0
+            'set_point': 0.5
+            'start_time': 1.0
     
+
