@@ -1,31 +1,28 @@
 import threading
+from base_action import BaseAction
 
-class FlowAction(object):
+class FlowAction(BaseAction):
 
     def __init__(self, device, param):
-        self.is_started = False
-        self.device = device
-        self.param = param
+        super(FlowAction,self).__init__(device,param)
+        self.proxy_thread = None
 
-    def update(self,t):
+    def __del__(self):
+        if self.proxy_thread is not None:
+            self.proxy_thread.join()
+            self.proxy_thread = None
+
+    def stop(self):
+        if not self.is_stopped:
+           self.set_flow(0.0)
+           self.is_stopped = True
+
+    def start(self):
         if not self.is_started:
-            try:
-                start_time = self.param['start_time']
-            except KeyError:
-                start_time = 0.0
-            if t >= start_time: 
-                self.set_flow(self.param['set_point'])
-                self.is_started = True
-        else:
-            try:
-                stop_time = self.param['stop_time']
-            except KeyError:
-                stop_time = None
-            if stop_time is not None and t >= stop_time:
-                self.set_flow(0.0)
+            self.set_flow(self.param['set_point'])
+            self.is_started = True
 
     def set_flow(self,set_point):
-        print('set flow {}'.format(set_point))
         flowrate_dict = {}
         push_scale = self.param['push_scale']
         push_addresses = self.param['push_addresses']
@@ -37,8 +34,8 @@ class FlowAction(object):
             flowrate_dict[addr] = set_point*pull_scale/len(pull_addresses)
 
         # Set flow rate using daemon thread to avoid delay
-        proxy_thread = threading.Thread(target=self.device.set_flow_rate, args=(flowrate_dict,))
-        proxy_thread.daemon = True
-        proxy_thread.start()
+        self.proxy_thread = threading.Thread(target=self.device.set_flow_rate, args=(flowrate_dict,))
+        self.proxy_thread.daemon = True
+        self.proxy_thread.start()
 
 

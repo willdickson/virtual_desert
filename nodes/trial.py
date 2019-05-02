@@ -1,6 +1,8 @@
 from __future__ import print_function
 import rospy
+
 from flow_action import FlowAction
+from panels_action import PanelsAction
 
 
 class Trial(object):
@@ -12,14 +14,16 @@ class Trial(object):
         self.devices = devices
 
         self.flow_action = FlowAction(self.devices['alicat_proxy'], self.param['flow'])
-        self.action_list = [self.flow_action]
+        self.panels_action = PanelsAction(self.init_angle,self.devices['panels_controller'], self.param['panels'])
+        self.action_list = [self.flow_action, self.panels_action]
 
     def __del__(self):
         self.device_shutdown()
 
     def device_shutdown(self):
-        self.flow_action.set_flow(0.0)
-
+        for action in self.action_list:
+            if not action.is_stopped:
+                action.stop()
 
     @property
     def name(self):
@@ -32,12 +36,9 @@ class Trial(object):
         return self.elapsed_time(t) >= self.param['duration']
 
     def update(self,t,angle):
-
         for action in self.action_list:
             action.update(self.elapsed_time(t))
-
-        print('{}: et: {:0.2f}, ang: {}'.format(self.name, self.elapsed_time(t),angle))
-        pass
+        #print('{}: et: {:0.2f}, ang: {}'.format(self.name, self.elapsed_time(t),angle))
 
 
 class DummyTrial(object):

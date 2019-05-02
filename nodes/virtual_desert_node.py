@@ -78,9 +78,16 @@ class VirtualDesert(object):
         where specified in trial 
         """
         trial_param = copy.deepcopy(self.param['trials'][index])
-        flow_param = copy.deepcopy(self.param['flow_default'])
-        flow_param.update(trial_param['flow'])
-        trial_param['flow'] = flow_param
+        param_name_list = ['flow', 'panels', 'sunled', 'autostep']
+        for param_name in param_name_list:
+            try:
+                param = copy.deepcopy(self.param['{}_default'.format(param_name)])
+            except KeyError:
+                param = {}
+            if param is None:
+                param = {}
+            param.update(trial_param[param_name])
+            trial_param[param_name] = param
         return trial_param
 
     def run(self):
@@ -94,6 +101,7 @@ class VirtualDesert(object):
                 self.current_trial.update(self.elapsed_time, self.mean_angle)
             else:
                 print('pretrial delay, t={:0.2f}'.format(self.elapsed_time))
+                pass
             self.rate.sleep()
 
 

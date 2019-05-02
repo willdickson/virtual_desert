@@ -1,6 +1,22 @@
 panels_config_id: 1
 rolling_mean_size: 1800
-startup_delay: 0.5
+startup_delay: 0.0
+randomization: 
+    enabled: False
+
+panels_default: 
+    'pattern_table': 
+        - [[-180.0, -135.0], 0] 
+        - [[-135.0,  -90.0], 1]
+        - [[ -90.0,  -45.0], 2]
+        - [[ -45.0,    0.0], 3]
+        - [[   0.0,   45.0], 4]
+        - [[  45.0,   90.0], 5]
+        - [[  90.0,  135.0], 6]
+        - [[ 135.0,  180.0], 7]
+
+
+autostep_default:
 
 flow_default:
     push_addresses: ['F']
@@ -8,32 +24,34 @@ flow_default:
     push_scale: 1.0
     pull_scale: 1000.0
 
+
 trials:
     -  
         # First Trial 
         # -----------
         'name':  'trial 1'
         
-        'duration': 10.0 
+        'duration': 6.0 
     
         'panels': 
             'mode': 'fixed_pattern' 
-            'gain_x': 0.0
+            'gain_x': 30.0
             'gain_y': 0.0
             'bias_x': 0.0
             'bias_y': 0.0
-            'pattern_id': 1 
+            'pattern_id': 0 
     
         'sunled': 
             'initial_pos': 3 
             'velocity': 1.0 
     
-        'motor': 
+        'autostep': 
             'mode': 'tracking' 
 
         'flow':  
             'set_point': 1.0
-            'start_time': 3.0 
+            'start_time': 0.0 
+            'stop_time': 1.0 
     
     
     -  
@@ -43,34 +61,26 @@ trials:
     
         'name': 'trial 2'
 
-        'duration': 5.0 
+        'duration': 8.0 
     
         'panels': 
             'mode': 'set_by_angle' 
-            'gain_x': 0.0
+            'gain_x': 30.0
             'gain_y': 0.0
             'bias_x': 0.0
             'bias_y': 0.0
-            'pattern_table': 
-                - [-180.0, 0] 
-                - [-135.0, 1]
-                - [ -90.0, 2]
-                - [ -45.0, 3]
-                - [  -0.0, 4]
-                - [  45.0, 5]
-                - [  90.0, 6]
-                - [ 135.0, 7]
 
         'sunled': 
             'initial_pos': 3 
             'velocity': 1.0 
     
-        'motor': 
+        'autostep': 
             'mode': 'fixed' 
             'angle': 90.0 
 
         'flow':
             'set_point': 0.5
-            'start_time': 1.0
+            'start_time': 0.0
+            'stop_time':  1.0 
     
 
