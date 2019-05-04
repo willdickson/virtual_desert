@@ -12,7 +12,8 @@ class PanelsAction(BaseAction):
     def stop(self):
         print('panels action stop')
         if not self.is_stopped:
-            self.panels_off()
+            if not ('nostop' in self.param):
+                self.panels_off()
             self.is_stopped = True
 
     def start(self):
@@ -27,8 +28,9 @@ class PanelsAction(BaseAction):
         if pattern_id == 'off':
             self.panels_off()
         else:
-            self.device.stop()
+            print('show pattern', pattern_id)
             self.device.set_pattern_id(pattern_id)      
+            self.device.stop()
             self.device.send_gain_bias(
                     gain_x = self.param['gain_x'], 
                     bias_x = self.param['bias_x'],

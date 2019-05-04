@@ -3,6 +3,7 @@ import rospy
 
 from flow_action import FlowAction
 from panels_action import PanelsAction
+from autostep_action import AutostepAction
 
 
 class Trial(object):
@@ -13,15 +14,29 @@ class Trial(object):
         self.param = trial_param
         self.devices = devices
 
-        self.flow_action = FlowAction(self.devices['alicat_proxy'], self.param['flow'])
-        self.panels_action = PanelsAction(self.init_angle,self.devices['panels_controller'], self.param['panels'])
-        self.action_list = [self.flow_action, self.panels_action]
+        self.autostep_action = AutostepAction(
+                self.devices['autostep_tracking_data_pub'], 
+                self.devices['autostep_proxy'], 
+                self.param['autostep']
+                )
+
+        self.flow_action = FlowAction(
+                self.devices['alicat_proxy'], 
+                self.param['flow']
+                )
+
+        self.panels_action = PanelsAction(
+                self.init_angle,self.devices['panels_controller'], 
+                self.param['panels']
+                )
+
+        self.action_list = [self.autostep_action,  self.panels_action, self.flow_action,]
 
     def __del__(self):
         self.device_shutdown()
 
     def device_shutdown(self):
-        for action in self.action_list:
+        for action in reversed(self.action_list):
             if not action.is_stopped:
                 action.stop()
 
@@ -37,7 +52,7 @@ class Trial(object):
 
     def update(self,t,angle):
         for action in self.action_list:
-            action.update(self.elapsed_time(t))
+            action.update(self.elapsed_time(t),angle)
         #print('{}: et: {:0.2f}, ang: {}'.format(self.name, self.elapsed_time(t),angle))
 
 

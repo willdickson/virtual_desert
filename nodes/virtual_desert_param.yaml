@@ -1,19 +1,23 @@
-panels_config_id: 1
+panels_config_id: 0
 rolling_mean_size: 1800
 startup_delay: 0.0
+angle_lowpass_fcut: 10.0
+angle_framerate: 30.0   # maybe calculate from incoming images/angle data
+
+
 randomization: 
     enabled: False
 
 panels_default: 
     'pattern_table': 
-        - [[-180.0, -135.0], 0] 
-        - [[-135.0,  -90.0], 1]
-        - [[ -90.0,  -45.0], 2]
-        - [[ -45.0,    0.0], 3]
-        - [[   0.0,   45.0], 4]
-        - [[  45.0,   90.0], 5]
-        - [[  90.0,  135.0], 6]
-        - [[ 135.0,  180.0], 7]
+        - [[-180.0, -135.0], 1] 
+        - [[-135.0,  -90.0], 2]
+        - [[ -90.0,  -45.0], 3]
+        - [[ -45.0,    0.0], 4]
+        - [[   0.0,   45.0], 5]
+        - [[  45.0,   90.0], 4]
+        - [[  90.0,  135.0], 3]
+        - [[ 135.0,  180.0], 2]
 
 
 autostep_default:
@@ -39,20 +43,21 @@ trials:
             'gain_y': 0.0
             'bias_x': 0.0
             'bias_y': 0.0
-            'pattern_id': 0 
+            'pattern_id': 1 
+            'nostop': 
     
         'sunled': 
             'initial_pos': 3 
             'velocity': 1.0 
     
         'autostep': 
-            'mode': 'tracking' 
+            'mode': 'fixed_angle' 
+            'angle': 90.0 
 
         'flow':  
             'set_point': 1.0
             'start_time': 0.0 
             'stop_time': 1.0 
-    
     
     -  
         # Second Trial 
@@ -75,8 +80,8 @@ trials:
             'velocity': 1.0 
     
         'autostep': 
-            'mode': 'fixed' 
-            'angle': 90.0 
+            'mode': 'fixed_rate' 
+            'rate': 90.0 
 
         'flow':
             'set_point': 0.5
@@ -84,3 +89,11 @@ trials:
             'stop_time':  1.0 
     
 
+
+# closed_loop
+# fixed_angle
+# fixed_rate
+# cosine 
+#  amplitude
+#  period
+#  offset_angle

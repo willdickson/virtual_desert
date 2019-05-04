@@ -33,9 +33,14 @@ class FlowAction(BaseAction):
         for addr in pull_addresses:
             flowrate_dict[addr] = set_point*pull_scale/len(pull_addresses)
 
+        rsp = self.device.set_flow_rate(flowrate_dict)
+
+        # TODO: not working correctly ... getting some error ...
+        # --------------------------------------------------------------------------------------------
         # Set flow rate using daemon thread to avoid delay
-        self.proxy_thread = threading.Thread(target=self.device.set_flow_rate, args=(flowrate_dict,))
-        self.proxy_thread.daemon = True
-        self.proxy_thread.start()
+        #self.proxy_thread = threading.Thread(target=self.device.set_flow_rate, args=(flowrate_dict,))
+        #self.proxy_thread.daemon = True
+        #self.proxy_thread.start()
+
 
 

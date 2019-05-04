@@ -18,7 +18,7 @@ class BaseAction(object):
     def stop(self):
         pass
 
-    def update(self,t):
+    def update(self,t,angle):
         if not self.is_started:
             try:
                 start_time = self.param['start_time']
