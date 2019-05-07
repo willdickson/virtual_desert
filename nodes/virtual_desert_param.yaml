@@ -35,7 +35,7 @@ trials:
         # -----------
         'name':  'trial 1'
         
-        'duration': 6.0 
+        'duration': 60.0 
     
         'panels': 
             'mode': 'fixed_pattern' 
@@ -51,44 +51,43 @@ trials:
             'velocity': 1.0 
     
         'autostep': 
-            'mode': 'fixed_angle' 
+            'mode': 'closed_loop' 
             'angle': 90.0 
 
         'flow':  
             'set_point': 1.0
             'start_time': 0.0 
-            'stop_time': 1.0 
-    
-    -  
-        # Second Trial 
-        # -----------
+            'stop_time': 5.0 
 
+                #    -  
+                #        # Second Trial 
+                #        # -----------
+                #
+                #    
+                #        'name': 'trial 2'
+                #
+                #        'duration': 5.0 
+                #    
+                #        'panels': 
+                #            'mode': 'set_by_angle' 
+                #            'gain_x': 30.0
+                #            'gain_y': 0.0
+                #            'bias_x': 0.0
+                #            'bias_y': 0.0
+                #
+                #        'sunled': 
+                #            'initial_pos': 3 
+                #            'velocity': 1.0 
+                #    
+                #        'autostep': 
+                #            'mode': 'closed_loop' 
+                #            'rate': 90.0 
+                #
+                #        'flow':
+                #            'set_point': 1.0
+                #            'start_time': 0.0
+                #            'stop_time':  5.0 
     
-        'name': 'trial 2'
-
-        'duration': 8.0 
-    
-        'panels': 
-            'mode': 'set_by_angle' 
-            'gain_x': 30.0
-            'gain_y': 0.0
-            'bias_x': 0.0
-            'bias_y': 0.0
-
-        'sunled': 
-            'initial_pos': 3 
-            'velocity': 1.0 
-    
-        'autostep': 
-            'mode': 'fixed_rate' 
-            'rate': 90.0 
-
-        'flow':
-            'set_point': 0.5
-            'start_time': 0.0
-            'stop_time':  1.0 
-    
-
 
 # closed_loop
 # fixed_angle
@@ -97,3 +96,298 @@ trials:
 #  amplitude
 #  period
 #  offset_angle
+
+
+
+# Flow rate trials
+# ------------------------------------------------------
+#
+                #    -  
+                #        # First Trial 
+                #        # -----------
+                #        'name':  'trial 1'
+                #        
+                #        'duration': 15.0 
+                #    
+                #        'panels': 
+                #            'mode': 'fixed_pattern' 
+                #            'gain_x': 30.0
+                #            'gain_y': 0.0
+                #            'bias_x': 0.0
+                #            'bias_y': 0.0
+                #            'pattern_id': 1 
+                #            'nostop': 
+                #    
+                #        'sunled': 
+                #            'initial_pos': 3 
+                #            'velocity': 1.0 
+                #    
+                #        'autostep': 
+                #            'mode': 'fixed_angle' 
+                #            'angle': 90.0 
+                #
+                #        'flow':  
+                #            'set_point': 0.1
+                #            'start_time': 0.0 
+                #            'stop_time': 15.0 
+                #    -  
+                #        # First Trial 
+                #        # -----------
+                #        'name':  'trial 1'
+                #        
+                #        'duration': 15.0 
+                #    
+                #        'panels': 
+                #            'mode': 'fixed_pattern' 
+                #            'gain_x': 30.0
+                #            'gain_y': 0.0
+                #            'bias_x': 0.0
+                #            'bias_y': 0.0
+                #            'pattern_id': 1 
+                #            'nostop': 
+                #    
+                #        'sunled': 
+                #            'initial_pos': 3 
+                #            'velocity': 1.0 
+                #    
+                #        'autostep': 
+                #            'mode': 'fixed_angle' 
+                #            'angle': 90.0 
+                #
+                #        'flow':  
+                #            'set_point': 0.2
+                #            'start_time': 0.0 
+                #            'stop_time': 15.0 
+                #    -  
+                #        # First Trial 
+                #        # -----------
+                #        'name':  'trial 1'
+                #        
+                #        'duration': 15.0 
+                #    
+                #        'panels': 
+                #            'mode': 'fixed_pattern' 
+                #            'gain_x': 30.0
+                #            'gain_y': 0.0
+                #            'bias_x': 0.0
+                #            'bias_y': 0.0
+                #            'pattern_id': 1 
+                #            'nostop': 
+                #    
+                #        'sunled': 
+                #            'initial_pos': 3 
+                #            'velocity': 1.0 
+                #    
+                #        'autostep': 
+                #            'mode': 'fixed_angle' 
+                #            'angle': 90.0 
+                #
+                #        'flow':  
+                #            'set_point': 0.3
+                #            'start_time': 0.0 
+                #            'stop_time': 15.0 
+                #    -  
+                #        # First Trial 
+                #        # -----------
+                #        'name':  'trial 1'
+                #        
+                #        'duration': 15.0 
+                #    
+                #        'panels': 
+                #            'mode': 'fixed_pattern' 
+                #            'gain_x': 30.0
+                #            'gain_y': 0.0
+                #            'bias_x': 0.0
+                #            'bias_y': 0.0
+                #            'pattern_id': 1 
+                #            'nostop': 
+                #    
+                #        'sunled': 
+                #            'initial_pos': 3 
+                #            'velocity': 1.0 
+                #    
+                #        'autostep': 
+                #            'mode': 'fixed_angle' 
+                #            'angle': 90.0 
+                #
+                #        'flow':  
+                #            'set_point': 0.4
+                #            'start_time': 0.0 
+                #            'stop_time': 15.0 
+                #    
+                #    -  
+                #        # First Trial 
+                #        # -----------
+                #        'name':  'trial 1'
+                #        
+                #        'duration': 15.0 
+                #    
+                #        'panels': 
+                #            'mode': 'fixed_pattern' 
+                #            'gain_x': 30.0
+                #            'gain_y': 0.0
+                #            'bias_x': 0.0
+                #            'bias_y': 0.0
+                #            'pattern_id': 1 
+                #            'nostop': 
+                #    
+                #        'sunled': 
+                #            'initial_pos': 3 
+                #            'velocity': 1.0 
+                #    
+                #        'autostep': 
+                #            'mode': 'fixed_angle' 
+                #            'angle': 90.0 
+                #
+                #        'flow':  
+                #            'set_point': 0.5
+                #            'start_time': 0.0 
+                #            'stop_time': 15.0 
+                #
+                #    -  
+                #        # First Trial 
+                #        # -----------
+                #        'name':  'trial 1'
+                #        
+                #        'duration': 15.0 
+                #    
+                #        'panels': 
+                #            'mode': 'fixed_pattern' 
+                #            'gain_x': 30.0
+                #            'gain_y': 0.0
+                #            'bias_x': 0.0
+                #            'bias_y': 0.0
+                #            'pattern_id': 1 
+                #            'nostop': 
+                #    
+                #        'sunled': 
+                #            'initial_pos': 3 
+                #            'velocity': 1.0 
+                #    
+                #        'autostep': 
+                #            'mode': 'fixed_angle' 
+                #            'angle': 90.0 
+                #
+                #        'flow':  
+                #            'set_point': 0.6
+                #            'start_time': 0.0 
+                #            'stop_time': 15.0 
+                #
+                #    -  
+                #        # First Trial 
+                #        # -----------
+                #        'name':  'trial 1'
+                #        
+                #        'duration': 15.0 
+                #    
+                #        'panels': 
+                #            'mode': 'fixed_pattern' 
+                #            'gain_x': 30.0
+                #            'gain_y': 0.0
+                #            'bias_x': 0.0
+                #            'bias_y': 0.0
+                #            'pattern_id': 1 
+                #            'nostop': 
+                #    
+                #        'sunled': 
+                #            'initial_pos': 3 
+                #            'velocity': 1.0 
+                #    
+                #        'autostep': 
+                #            'mode': 'fixed_angle' 
+                #            'angle': 90.0 
+                #
+                #        'flow':  
+                #            'set_point': 0.7
+                #            'start_time': 0.0 
+                #            'stop_time': 15.0 
+                #
+                #    -  
+                #        # First Trial 
+                #        # -----------
+                #        'name':  'trial 1'
+                #        
+                #        'duration': 15.0 
+                #    
+                #        'panels': 
+                #            'mode': 'fixed_pattern' 
+                #            'gain_x': 30.0
+                #            'gain_y': 0.0
+                #            'bias_x': 0.0
+                #            'bias_y': 0.0
+                #            'pattern_id': 1 
+                #            'nostop': 
+                #    
+                #        'sunled': 
+                #            'initial_pos': 3 
+                #            'velocity': 1.0 
+                #    
+                #        'autostep': 
+                #            'mode': 'fixed_angle' 
+                #            'angle': 90.0 
+                #
+                #        'flow':  
+                #            'set_point': 0.8
+                #            'start_time': 0.0 
+                #            'stop_time': 15.0 
+                #
+                #    -  
+                #        # First Trial 
+                #        # -----------
+                #        'name':  'trial 1'
+                #        
+                #        'duration': 15.0 
+                #    
+                #        'panels': 
+                #            'mode': 'fixed_pattern' 
+                #            'gain_x': 30.0
+                #            'gain_y': 0.0
+                #            'bias_x': 0.0
+                #            'bias_y': 0.0
+                #            'pattern_id': 1 
+                #            'nostop': 
+                #    
+                #        'sunled': 
+                #            'initial_pos': 3 
+                #            'velocity': 1.0 
+                #    
+                #        'autostep': 
+                #            'mode': 'fixed_angle' 
+                #            'angle': 90.0 
+                #
+                #        'flow':  
+                #            'set_point': 0.9
+                #            'start_time': 0.0 
+                #            'stop_time': 15.0 
+                #
+                #    -  
+                #        # First Trial 
+                #        # -----------
+                #        'name':  'trial 1'
+                #        
+                #        'duration': 15.0 
+                #    
+                #        'panels': 
+                #            'mode': 'fixed_pattern' 
+                #            'gain_x': 30.0
+                #            'gain_y': 0.0
+                #            'bias_x': 0.0
+                #            'bias_y': 0.0
+                #            'pattern_id': 1 
+                #            'nostop': 
+                #    
+                #        'sunled': 
+                #            'initial_pos': 3 
+                #            'velocity': 1.0 
+                #    
+                #        'autostep': 
+                #            'mode': 'fixed_angle' 
+                #            'angle': 90.0 
+                #
+                #        'flow':  
+                #            'set_point': 1.0
+                #            'start_time': 0.0 
+                #            'stop_time': 15.0 
+
+
+

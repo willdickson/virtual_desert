@@ -37,6 +37,7 @@ class VirtualDesert(object):
 
         self.lock = threading.Lock()
         self.start_time = rospy.get_time()
+        self.last_angle_time = rospy.get_time()
 
         self.angle_lowpass_filter = lowpass_filter.LowpassFilter(self.param['angle_lowpass_fcut'])
         self.angle_accumulator = angle_utils.AngleAccumulator()
@@ -103,10 +104,14 @@ class VirtualDesert(object):
         return angle 
 
     def on_angle_data_callback(self,data):
+        angle_time = data.header.stamp.to_sec()
+        dt = angle_time - self.last_angle_time
+        self.last_angle_time = angle_time
+        print(dt)
         with self.lock:
             self.rolling_circ_mean.insert_data(data.angle)
             angle_unwrapped = self.angle_accumulator.update(data.angle)
-            angle_fixed = self.angle_fixer.fix_data(angle_unwraped)
+            angle_fixed = self.angle_fixer.fix_data(angle_unwrapped)
             self.angle_lowpass_filter.update(angle_fixed,self.angle_dt)
 
     def move_to_next_trial(self): 
@@ -138,7 +143,6 @@ class VirtualDesert(object):
 
     def run(self):
 
-
         while not rospy.is_shutdown(): 
             if self.elapsed_time > self.param['startup_delay']:
                 if self.current_trial.is_done(self.elapsed_time):
@@ -147,6 +151,7 @@ class VirtualDesert(object):
                     except IndexError:
                         break  # Done with trials -> exit loop
                 self.current_trial.update(self.elapsed_time, self.angle)
+                #print('t: {:0.2f}'.format(self.elapsed_time))
             else:
                 print('pretrial delay, t={:0.2f}'.format(self.elapsed_time))
                 pass

@@ -1,4 +1,6 @@
+import rospy
 from base_action import BaseAction
+from autostep_ros.msg import TrackingData
 
 
 class AutostepAction(BaseAction):
@@ -9,6 +11,12 @@ class AutostepAction(BaseAction):
 
     def update(self,t,angle):
         super(AutostepAction,self).update(t,angle)
+        if self.param['mode'] == 'closed_loop':
+            msg = TrackingData()
+            msg.header.stamp = rospy.Time.now()
+            msg.position = angle
+            msg.velocity = 0.0
+            self.tracking_data_pub.publish(msg)
 
     def start(self):
         if not self.is_started:
