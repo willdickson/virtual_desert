@@ -37,7 +37,13 @@ class VirtualDesert(object):
 
         self.lock = threading.Lock()
         self.start_time = rospy.get_time()
+
+        # Debugging
+        # -----------------------------------------------
         self.last_angle_time = rospy.get_time()
+        self.last_recv_time = rospy.get_time()
+        self.timing_fid = open('timing.txt','w')
+        # -----------------------------------------------
 
         self.angle_lowpass_filter = lowpass_filter.LowpassFilter(self.param['angle_lowpass_fcut'])
         self.angle_accumulator = angle_utils.AngleAccumulator()
@@ -54,6 +60,7 @@ class VirtualDesert(object):
         self.rolling_circ_mean = RollingCircularMean(self.param['rolling_mean_size'])
         self.angle_data_sub = rospy.Subscriber('/angle_data', MsgAngleData,self.on_angle_data_callback) 
 
+
     def initialize_panels_controller(self):
         # Wait until we have a subscriber connected or else message may be thrown away
         # It would be better if the panels controller used a service.
@@ -66,15 +73,20 @@ class VirtualDesert(object):
     def shutdown_panels(self):
         self.devices['panels_controller'].stop()
         self.devices['panels_controller'].all_off()
+
+    def initialize_autostep(self):
+        # Set up known starting angle=0
+        self.devices['autostep_proxy'].disable_tracking_mode()
+        self.devices['autostep_proxy'].set_move_mode('jog')
+        self.devices['autostep_proxy'].move_to(0.0)
+        self.devices['autostep_proxy'].busy_wait()
         while self.devices['autostep_tracking_data_pub'].get_num_connections() < 1:
             # May want to put a try counter on this and error out after some number of attempts
             rospy.sleep(0.1)
 
-    def initialize_autostep(self):
-        # Set up known starting angle=0
-        self.devices['autostep_proxy'].set_move_mode('jog')
-        self.devices['autostep_proxy'].move_to(0.0)
-        self.devices['autostep_proxy'].busy_wait()
+    def shutdown_autostep(self):
+        self.devices['autostep_proxy'].disable_tracking_mode()
+        self.devices['autostep_proxy'].soft_stop()
 
     def get_param(self):
         self.param = rospy.get_param('/virtual_desert/param', None) 
@@ -104,10 +116,17 @@ class VirtualDesert(object):
         return angle 
 
     def on_angle_data_callback(self,data):
+
         angle_time = data.header.stamp.to_sec()
-        dt = angle_time - self.last_angle_time
+        angle_dt = angle_time - self.last_angle_time
         self.last_angle_time = angle_time
-        print(dt)
+
+        recv_time = rospy.get_time()
+        recv_dt = recv_time - self.last_recv_time
+        self.last_recv_time = recv_time
+
+        self.timing_fid.write('{} {}\n'.format(angle_dt,recv_dt))
+
         with self.lock:
             self.rolling_circ_mean.insert_data(data.angle)
             angle_unwrapped = self.angle_accumulator.update(data.angle)
@@ -158,6 +177,7 @@ class VirtualDesert(object):
             self.rate.sleep()
 
         self.shutdown_panels()
+        self.shutdown_autostep()
 
 
 # ---------------------------------------------------------------------------------------
