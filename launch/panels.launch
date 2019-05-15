@@ -1,0 +1,5 @@
+<launch>
+	<node name="ledpanels" pkg="ledpanels" type="panel_node.py" required="true" >
+        <param name="serialport" value="/dev/controller"/>
+    </node>
+</launch>

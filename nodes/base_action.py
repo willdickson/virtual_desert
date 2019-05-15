@@ -12,11 +12,11 @@ class BaseAction(object):
         self.device = device
         self.param = param
 
-    def stop(self):
-        pass
+    def start(self):
+        self.is_started = True
 
     def stop(self):
-        pass
+        self.is_stopped = True
 
     def update(self,t,angle):
         if not self.is_started:

@@ -1,0 +1,9 @@
+<launch>
+    <node 
+        pkg="rqt_plot" 
+        type="rqt_plot" 
+        name="rqt_plot" 
+        args="/angle_data/angle"
+        > 
+    </node>
+</launch>

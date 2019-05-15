@@ -1,0 +1,5 @@
+<launch>
+    <node pkg="basic_led_strip_ros" name="basic_led_strip" type="basic_led_strip_node.py">
+        <param name="port" value="/dev/sun_strip" />
+    </node>
+</launch>

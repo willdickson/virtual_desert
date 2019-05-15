@@ -1,0 +1,6 @@
+<launch>
+    <arg name="config" default="$(find virtual_desert)/launch/alicat_param.yaml" />
+    <rosparam command="load" file="$(arg config)" ns="alicat"/>
+    <node pkg="alicat_ros" name="alicat_ros" type="alicat_node.py">
+    </node>
+</launch>

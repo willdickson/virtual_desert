@@ -1,0 +1,5 @@
+<launch>
+    <node name="camera" pkg="camera_aravis" type="camnode">
+        <param name="AcquisitionFrameRate" type="double" value="30"/>
+    </node>
+</launch>

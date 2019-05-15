@@ -47,7 +47,8 @@ trials:
             'nostop': 
     
         'sunled': 
-            'initial_pos': 3 
+            'mode': 'fixed_rate'
+            'initial_position': 3 
             'velocity': 1.0 
     
         'autostep': 
@@ -391,3 +392,10 @@ trials:
 
 
 
+                # Examplel for sunled  position table
+                #sunled:
+                #    mode: 'position_table'
+                #    table: 
+                #        - [[ 0.0, 10.0], 5]
+                #        - [[20.0, 40.0], 100]
+                #

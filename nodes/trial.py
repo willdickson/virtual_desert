@@ -4,6 +4,7 @@ import rospy
 from flow_action import FlowAction
 from panels_action import PanelsAction
 from autostep_action import AutostepAction
+from sunled_action import SunledAction
 
 
 class Trial(object):
@@ -29,6 +30,8 @@ class Trial(object):
                 self.init_angle,self.devices['panels_controller'], 
                 self.param['panels']
                 )
+
+       # self.sunled_action = SunledAction( )
 
         self.action_list = [self.autostep_action,  self.panels_action, self.flow_action,]
 

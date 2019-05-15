@@ -38,13 +38,6 @@ class VirtualDesert(object):
         self.lock = threading.Lock()
         self.start_time = rospy.get_time()
 
-        # Debugging
-        # -----------------------------------------------
-        self.last_angle_time = rospy.get_time()
-        self.last_recv_time = rospy.get_time()
-        self.timing_fid = open('timing.txt','w')
-        # -----------------------------------------------
-
         self.angle_lowpass_filter = lowpass_filter.LowpassFilter(self.param['angle_lowpass_fcut'])
         self.angle_accumulator = angle_utils.AngleAccumulator()
         self.angle_fixer = angle_utils.AngleFixer()
@@ -116,17 +109,6 @@ class VirtualDesert(object):
         return angle 
 
     def on_angle_data_callback(self,data):
-
-        angle_time = data.header.stamp.to_sec()
-        angle_dt = angle_time - self.last_angle_time
-        self.last_angle_time = angle_time
-
-        recv_time = rospy.get_time()
-        recv_dt = recv_time - self.last_recv_time
-        self.last_recv_time = recv_time
-
-        self.timing_fid.write('{} {}\n'.format(angle_dt,recv_dt))
-
         with self.lock:
             self.rolling_circ_mean.insert_data(data.angle)
             angle_unwrapped = self.angle_accumulator.update(data.angle)
