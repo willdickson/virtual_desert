@@ -1,9 +1,10 @@
+update_rate: 50.0
 panels_config_id: 0
 rolling_mean_size: 1800
 startup_delay: 0.0
 angle_lowpass_fcut: 10.0
 angle_framerate: 30.0   # maybe calculate from incoming images/angle data
-
+wait_for_param_sub: false 
 
 randomization: 
     enabled: False
@@ -21,6 +22,7 @@ panels_default:
 
 
 autostep_default:
+    dummy: true
 
 flow_default:
     push_addresses: ['F']
@@ -35,7 +37,7 @@ trials:
         # -----------
         'name':  'trial 1'
         
-        'duration': 60.0 
+        'duration': 10.0 
     
         'panels': 
             'mode': 'fixed_pattern' 
@@ -44,7 +46,7 @@ trials:
             'bias_x': 0.0
             'bias_y': 0.0
             'pattern_id': 1 
-            'nostop': 
+            'nostop': true
     
         'sunled': 
             'mode': 'fixed_rate'
@@ -54,6 +56,7 @@ trials:
         'autostep': 
             'mode': 'closed_loop' 
             'angle': 90.0 
+            'stop_time': 8.0
 
         'flow':  
             'set_point': 1.0

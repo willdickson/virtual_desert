@@ -6,6 +6,9 @@ from panels_action import PanelsAction
 from autostep_action import AutostepAction
 from sunled_action import SunledAction
 
+from virtual_desert.msg import TrialData
+from virtual_desert.msg import ActionData
+
 
 class Trial(object):
 
@@ -54,9 +57,14 @@ class Trial(object):
         return self.elapsed_time(t) >= self.param['duration']
 
     def update(self,t,angle):
-        for action in self.action_list:
-            action.update(self.elapsed_time(t),angle)
-        #print('{}: et: {:0.2f}, ang: {}'.format(self.name, self.elapsed_time(t),angle))
+        msg = TrialData()
+        msg.name = self.name
+        msg.elapsed_time = self.elapsed_time(t)
+        msg.init_angle = self.init_angle
+        msg.autostep_action_data = self.autostep_action.update(self.elapsed_time(t),angle)
+        msg.panels_action_data = self.panels_action.update(self.elapsed_time(t),angle)
+        msg.flow_action_data = self.flow_action.update(self.elapsed_time(t),angle)
+        return msg
 
 
 class DummyTrial(object):

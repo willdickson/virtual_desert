@@ -1,0 +1,9 @@
+<launch>
+    <node 
+        pkg="rosbag" 
+        name="virtual_desert_logger" 
+        type="record" 
+        args="record  -o $(env HOME)/work/vdesert_data/data /virtual_desert_data /virtual_desert_param" 
+        >
+    </node>
+</launch>

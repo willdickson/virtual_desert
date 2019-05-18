@@ -5,11 +5,13 @@ import sys
 import time
 import copy
 import yaml
+import json
 import threading
 import numpy as np
 import rospy
 import angle_utils
 import lowpass_filter
+import std_msgs.msg
 
 from ledpanels import display_ctrl
 from alicat_ros_proxy import  AlicatProxy
@@ -20,6 +22,9 @@ from rolling_circular_mean import RollingCircularMean
 from trial import Trial, DummyTrial
 
 from magnotether.msg import MsgAngleData
+
+from virtual_desert.msg import TrialData
+from virtual_desert.msg import VirtualDesertData
 
 
 class VirtualDesert(object):
@@ -33,7 +38,7 @@ class VirtualDesert(object):
 
         rospy.init_node('virtual_desert')
         self.get_param()
-        self.rate = rospy.Rate(50.0)
+        self.rate = rospy.Rate(self.param['update_rate'])
 
         self.lock = threading.Lock()
         self.start_time = rospy.get_time()
@@ -52,6 +57,9 @@ class VirtualDesert(object):
         self.initialize_autostep()
         self.rolling_circ_mean = RollingCircularMean(self.param['rolling_mean_size'])
         self.angle_data_sub = rospy.Subscriber('/angle_data', MsgAngleData,self.on_angle_data_callback) 
+
+        self.data_pub = rospy.Publisher('/virtual_desert_data', VirtualDesertData, queue_size=10)
+        self.param_pub = rospy.Publisher('/virtual_desert_param', std_msgs.msg.String, queue_size=10)
 
 
     def initialize_panels_controller(self):
@@ -82,7 +90,7 @@ class VirtualDesert(object):
         self.devices['autostep_proxy'].soft_stop()
 
     def get_param(self):
-        self.param = rospy.get_param('/virtual_desert/param', None) 
+        self.param = rospy.get_param('/virtual_desert', None) 
         if self.param is None:
             param_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)),self.Default_Param_File)
             with open(param_file_path,'r') as f:
@@ -144,18 +152,33 @@ class VirtualDesert(object):
 
     def run(self):
 
+        # Set to true to make sure parameters are in bag file
+        if self.param['wait_for_param_sub']: 
+            while self.param_pub.get_num_connections() < 1:
+                rospy.sleep(0.1)
+        self.param_pub.publish(json.dumps(self.param))
+
         while not rospy.is_shutdown(): 
-            if self.elapsed_time > self.param['startup_delay']:
-                if self.current_trial.is_done(self.elapsed_time):
+            elapsed_time = self.elapsed_time
+            if elapsed_time > self.param['startup_delay']:
+                if self.current_trial.is_done(elapsed_time):
                     try:
                         self.move_to_next_trial()
                     except IndexError:
                         break  # Done with trials -> exit loop
-                self.current_trial.update(self.elapsed_time, self.angle)
+                trial_msg = self.current_trial.update(elapsed_time, self.angle)
                 #print('t: {:0.2f}'.format(self.elapsed_time))
             else:
-                print('pretrial delay, t={:0.2f}'.format(self.elapsed_time))
-                pass
+                print('pretrial delay, t={:0.2f}'.format(elapsed_time))
+                trial_msg = TrialData()
+
+            msg = VirtualDesertData()
+            msg.header.stamp = rospy.Time.now()
+            msg.angle = self.angle
+            msg.elapsed_time = elapsed_time
+            msg.current_trial_index = self.current_trial_index
+            msg.trial_data = trial_msg
+            self.data_pub.publish(msg)
             self.rate.sleep()
 
         self.shutdown_panels()
