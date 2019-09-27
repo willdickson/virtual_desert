@@ -33,11 +33,11 @@ class AngleFixer(object):
             self.mean_angle = np.mean(self.data)
             self.data.pop(0)
             if (self.data[-1]-self.mean_angle)>=130:
-                self.data[-1] = self.data[-1]-180.0
-                return self.data[-1]
+                #self.data[-1] = self.data[-1]-180.0
+                return self.data[-2]
             elif (self.data[-1]-self.mean_angle)<=-130:
-                self.data[-1] = self.data[-1]+180.0
-                return self.data[-1]
+                #self.data[-1] = self.data[-1]+180.0
+                return self.data[-2]
             else:
                 return self.data[-1]
         else:

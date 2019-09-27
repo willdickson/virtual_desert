@@ -30,13 +30,19 @@ class Trial(object):
                 )
 
         self.panels_action = PanelsAction(
-                self.init_angle,self.devices['panels_controller'], 
+                self.init_angle,
+                self.devices['panels_controller'], 
                 self.param['panels']
                 )
 
-       # self.sunled_action = SunledAction( )
+        #self.sunled_action = SunledAction(
+        #        self.init_angle,
+        #        self.devices['sunled_proxy'], 
+        #        self.param['sunled']
+        #        )
+        #self.action_list = [self.autostep_action, self.panels_action, self.flow_action, self.sunled_action]
 
-        self.action_list = [self.autostep_action,  self.panels_action, self.flow_action,]
+        self.action_list = [self.autostep_action, self.panels_action, self.flow_action]
 
     def __del__(self):
         self.device_shutdown()

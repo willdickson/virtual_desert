@@ -17,6 +17,7 @@ from ledpanels import display_ctrl
 from alicat_ros_proxy import  AlicatProxy
 from autostep_proxy import AutostepProxy
 from autostep_ros.msg import TrackingData
+from basic_led_strip_proxy import BasicLedStripProxy
 
 from rolling_circular_mean import RollingCircularMean
 from trial import Trial, DummyTrial
@@ -52,6 +53,7 @@ class VirtualDesert(object):
         self.devices['alicat_proxy'] = AlicatProxy()
         self.devices['autostep_proxy'] = AutostepProxy()
         self.devices['autostep_tracking_data_pub'] = rospy.Publisher('/autostep/tracking_data', TrackingData, queue_size=10) 
+        #self.devices['sunled_proxy'] = BasicLedStripProxy()
 
         self.initialize_panels_controller()
         self.initialize_autostep()
