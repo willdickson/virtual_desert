@@ -3,7 +3,7 @@
         pkg="rosbag" 
         name="virtual_desert_logger" 
         type="record" 
-        args="record  -o $(env HOME)/work/vdesert_data/data /virtual_desert_data /virtual_desert_param" 
+        args="record  -o $(env HOME)/work/vdesert_data/data /virtual_desert_data /virtual_desert_param /autostep/motion_data /angle_data /ledpanels/command /alicat_device_array" 
         >
     </node>
 </launch>

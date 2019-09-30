@@ -2,10 +2,11 @@
    <include file="$(find virtual_desert)/launch/camera.launch" />
    <include file="$(find virtual_desert)/launch/panels.launch" />
    <include file="$(find virtual_desert)/launch/alicat_ros.launch" />
-   <include file="$(find virtual_desert)/launch/magnotether_wind.launch" /> 
+   <include file="$(find virtual_desert)/launch/magnotether_wind.launch" />
    <include file="$(find virtual_desert)/launch/rqt_plot.launch" /> 
    <include file="$(find virtual_desert)/launch/basic_led_strip.launch" /> 
    <include file="$(find autostep_ros)/launch/autostep_and_proxy_app.launch" />
+   <!-- <include file = "" /> -->
 </launch>
 
 

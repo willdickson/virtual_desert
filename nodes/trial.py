@@ -12,11 +12,12 @@ from virtual_desert.msg import ActionData
 
 class Trial(object):
 
-    def __init__(self, start_time, init_angle, trial_param, devices):
+    def __init__(self, start_time, init_angle, trial_param, devices, trial_index):
         self.start_time = start_time 
         self.init_angle = init_angle
         self.param = trial_param
         self.devices = devices
+        self.trial_index = trial_index
 
         self.autostep_action = AutostepAction(
                 self.devices['autostep_tracking_data_pub'], 
@@ -35,14 +36,15 @@ class Trial(object):
                 self.param['panels']
                 )
 
-        #self.sunled_action = SunledAction(
-        #        self.init_angle,
-        #        self.devices['sunled_proxy'], 
-        #        self.param['sunled']
-        #        )
-        #self.action_list = [self.autostep_action, self.panels_action, self.flow_action, self.sunled_action]
+        self.sunled_action = SunledAction(
+                self.init_angle,
+                self.devices['sunled_proxy'], 
+                self.param['sunled'],
+                self.trial_index
+                )
 
-        self.action_list = [self.autostep_action, self.panels_action, self.flow_action]
+        self.action_list = [self.autostep_action, self.panels_action, self.flow_action, self.sunled_action]
+        #self.action_list = [self.autostep_action, self.panels_action, self.flow_action]
 
     def __del__(self):
         self.device_shutdown()
@@ -67,9 +69,12 @@ class Trial(object):
         msg.name = self.name
         msg.elapsed_time = self.elapsed_time(t)
         msg.init_angle = self.init_angle
+
         msg.autostep_action_data = self.autostep_action.update(self.elapsed_time(t),angle)
         msg.panels_action_data = self.panels_action.update(self.elapsed_time(t),angle)
         msg.flow_action_data = self.flow_action.update(self.elapsed_time(t),angle)
+        msg.sunled_action_data = self.sunled_action.update(self.elapsed_time(t), angle)
+
         return msg
 
 

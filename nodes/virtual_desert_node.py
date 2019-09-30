@@ -53,7 +53,7 @@ class VirtualDesert(object):
         self.devices['alicat_proxy'] = AlicatProxy()
         self.devices['autostep_proxy'] = AutostepProxy()
         self.devices['autostep_tracking_data_pub'] = rospy.Publisher('/autostep/tracking_data', TrackingData, queue_size=10) 
-        #self.devices['sunled_proxy'] = BasicLedStripProxy()
+        self.devices['sunled_proxy'] = BasicLedStripProxy()
 
         self.initialize_panels_controller()
         self.initialize_autostep()
@@ -132,7 +132,13 @@ class VirtualDesert(object):
             del self.current_trial
             self.current_trial_index += 1
         trial_param = self.get_trial_params(self.current_trial_index)
-        self.current_trial = Trial(self.elapsed_time, self.mean_angle, trial_param, self.devices)
+        self.current_trial = Trial(
+                self.elapsed_time, 
+                self.mean_angle, 
+                trial_param, 
+                self.devices, 
+                self.current_trial_index
+                )
 
     def get_trial_params(self,index):
         """ 
