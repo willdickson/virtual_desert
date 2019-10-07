@@ -11,12 +11,21 @@ class AutostepAction(BaseAction):
 
     def update(self,t,angle):
         rval_msg = super(AutostepAction,self).update(t,angle)
-        if self.param['mode'] == 'closed_loop':
-            tracking_data_msg = TrackingData()
-            tracking_data_msg.header.stamp = rospy.Time.now()
+        tracking_data_msg = TrackingData()
+        tracking_data_msg.header.stamp = rospy.Time.now()
+        if self.param['mode'] == 'fixed_angle':
+            tracking_data_msg.position = self.param['angle']
+            tracking_data_msg.velocity = 0.0
+        elif self.param['mode'] == 'fixed_rate':
+            tracking_data_msg.position = self.device.get_position() 
+            tracking_data_msg.velocity = self.param['rate']
+        elif self.param['mode'] == 'closed_loop':
             tracking_data_msg.position = angle
             tracking_data_msg.velocity = 0.0
-            self.tracking_data_pub.publish(tracking_data_msg)
+        else:
+            tracking_data_msg.position = 0.0
+            tracking_data_msg.velocity = 0.0
+        self.tracking_data_pub.publish(tracking_data_msg)
         return rval_msg
 
     def start(self):
