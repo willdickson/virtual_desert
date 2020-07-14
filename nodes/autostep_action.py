@@ -52,7 +52,7 @@ class AutostepAction(BaseAction):
             self.device.set_move_mode('jog')
             self.device.soft_stop()
             self.device.busy_wait()
-            self.device.move_to(0.0)
+            #self.device.move_to(0.0)
             self.device.busy_wait()
             self.is_stopped = True
 

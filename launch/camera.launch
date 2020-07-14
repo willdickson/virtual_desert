@@ -1,6 +1,6 @@
 <launch>
     <node name="camera" pkg="camera_aravis" type="camnode">
         <param name="AcquisitionFrameRate" type="double" value="30"/>
-        <param name="ExposureTimeAbs"         type="double" value="3400"/>
+        <param name="ExposureTimeAbs"         type="double" value="4000"/>
     </node>
 </launch>

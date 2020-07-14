@@ -1,6 +1,7 @@
 port: '/dev/alicat_bb9'
 protocol: 2
-addresses: ['A','B','C','D','E','F']
+#addresses: ['A','B','C','D','E','F']
+addresses: ['A','F']
 publish_rate: 1.0
 
 

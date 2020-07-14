@@ -128,9 +128,11 @@ class VirtualDesert(object):
     def move_to_next_trial(self): 
         if self.current_trial_index is None:
             self.current_trial_index = 0
+            rospy.logwarn(self.current_trial_index)
         else:
             del self.current_trial
             self.current_trial_index += 1
+            rospy.logwarn(self.current_trial_index)
         trial_param = self.get_trial_params(self.current_trial_index)
         self.current_trial = Trial(
                 self.elapsed_time, 

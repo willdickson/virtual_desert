@@ -33,7 +33,8 @@ class Trial(object):
         self.panels_action = PanelsAction(
                 self.init_angle,
                 self.devices['panels_controller'], 
-                self.param['panels']
+                self.param['panels'],
+                self.trial_index #fponce edit
                 )
 
         self.sunled_action = SunledAction(
