@@ -1,0 +1,9 @@
+<launch>
+    <node 
+        pkg="rosbag" 
+        name="magno_arena_logger" 
+        type="record" 
+        args="record  -o $(env HOME)/work/magno_arena_data/data /magno_arena_data /magno_arena_param /angle_data /ledpanels/command /strip_led_info" 
+        >
+    </node>
+</launch>

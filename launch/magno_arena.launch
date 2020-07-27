@@ -1,0 +1,7 @@
+<launch>
+    <include file="$(find virtual_desert)/launch/logging_magno_arena.launch" /> 
+    <arg name="config" default="$(find virtual_desert)/nodes/magno_arena_param.yaml" />
+    <rosparam command="load" file="$(arg config)" ns="virtual_desert"/>
+    <node pkg="virtual_desert" name="virtual_desert" type="magno_arena_node.py">
+    </node>
+</launch>

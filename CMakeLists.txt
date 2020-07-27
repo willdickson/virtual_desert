@@ -51,7 +51,9 @@ find_package(catkin REQUIRED COMPONENTS
    FILES
    ActionData.msg
    TrialData.msg
+   TrialDataMagnoArena.msg
    VirtualDesertData.msg
+   VirtualDesertDataMagnoArena.msg
  )
 
 ## Generate services in the 'srv' folder

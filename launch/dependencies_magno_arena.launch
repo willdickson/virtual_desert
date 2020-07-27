@@ -1,0 +1,9 @@
+<launch>
+   <include file="$(find virtual_desert)/launch/camera_magno_arena_2.launch" />
+   <include file="$(find virtual_desert)/launch/panels.launch" />
+   <include file="$(find virtual_desert)/launch/magnotether_magno_arena.launch" />
+   <include file="$(find virtual_desert)/launch/rqt_plot.launch" /> 
+   <include file="$(find virtual_desert)/launch/basic_led_strip.launch" />
+   <!-- <include file = "" /> -->
+</launch>
+
